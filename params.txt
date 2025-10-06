@@ -63,5 +63,6 @@ create_pdfs     1                               # 0 if False, 1 if True.
                                                 # galaxy. WILL ALSO CREATE CORNERPLOTS FOR CIGALE PARAMS.
 
 delete_PDF_fits  0                              # 0 if False, 1 if True.
-                                                # removes PDF.fits files after creating PDF.png files
+                                                # removes PDF.fits files after creating PDF.pdf files
                                                 # particularly beneficial for storage control
+                                                # if False, moves all *.fits to the PDF_fits directory
