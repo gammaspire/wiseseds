@@ -1,6 +1,6 @@
 # WISESEDS -- Wrapper Scripts to Generate Spectral Energy Distribution Models for WISESize Galaxies
 
-See the Wiki for this code [here](https://github.com/gammaspire/wisesize/wiki/CIGALE-Initialization-and-Execution#cigale-setup) for detailed setup instructions!
+See the Wiki for this code [here](https://github.com/gammaspire/wiseseds/wiki) for detailed setup instructions!
 
 ## Run the main script:
 
@@ -24,7 +24,7 @@ The current setup of this code facilitates the running of CIGALE for a parent sa
 - Standalone scripts that can be run individually as a command line (literally, Command Line Interface).
     - write_input_files.py -- will output, in the directory indicated in params.txt, the files needed to initialize CIGALE. These include pcigale.ini, pcigale.ini.spec, and galaxy_data.txt (photometry tables written in a CIGALE-friendly format).
     - run_cigale_cli.py -- the CLI to run CIGALE, assuming `write_input_files.py` has already been executed. If the user has marked SED_plots=1 in params.txt, then running this script will also generate these SED figures. This script will NOT generate PDF figures.
-    - plot_PDF.py -- will generate probability distribution function diagnostics. ee the [Wiki](https://github.com/gammaspire/wisesize/wiki/CIGALE-Initialization-and-Execution#cigale-setup) for instructions. If you need a .diff file, please contact me!
+    - plot_PDF.py -- will generate probability distribution function diagnostics. ee the [Wiki](https://github.com/gammaspire/wiseseds/wiki) for instructions. If you need a .diff file, please contact me!
      
 ## /pcigale_ini_examples
 - Two examples of how a mature pcigale.ini and pcigale.ini.spec will look.
