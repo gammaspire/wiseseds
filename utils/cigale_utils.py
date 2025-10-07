@@ -23,11 +23,14 @@ def run_sed_plots(dir_path):
     
     os.chdir(dir_path)  #AGAIN, just in case...
     os.system('pcigale-plots sed')
-    print(f'Find .pdf plots in {dir_path}/out/')
 
     
-def organize_sed_output(dir_path, main_tab, id_col):
-    os.chdir(os.path.join(dir_path, 'out'))
+def organize_sed_output(dir_path, main_tab, out_dir_name):
+    
+    os.chdir(os.path.join(dir_path, out_dir_name))
+    print(os.path.join(dir_path, out_dir_name))
+    
+    print(os.listdir())
     
     #create directory for best SED models
     os.makedirs('best_SED_models', exist_ok=True)
@@ -40,21 +43,3 @@ def organize_sed_output(dir_path, main_tab, id_col):
     
     #remove all SFH fits files
     os.system('rm *_SFH*')
-
-    #create directory for PDF fits
-    os.makedirs('PDF_fits', exist_ok=True)
-    
-    len_tab = len(main_tab)
-    
-    #4 for VFID (VFS), 5 for OBJID (WISESize)
-    if len(str(id_col)) == 4:
-        formatted_strings = [f"{num:04}" for num in range(len_tab)]
-        ID_prefix='VFID'
-    else:
-        formatted_strings = [f"{num:05}" for num in range(len_tab)]
-        ID_prefix='OBJID'
-
-    #move all galaxy fits files to PDF_fits
-    for num in formatted_strings:
-        galID = f'{ID_prefix}{num}'
-        os.system(f'mv {galID}*fits PDF_fits')

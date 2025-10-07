@@ -3,6 +3,9 @@
 from astropy.table import Table, Row
 from conversion_utils import get_redshift
 
+
+#used for reading the params.txt file!
+#returns a dictionary object
 def read_params(param_file):
 
     param_dict={}
@@ -72,6 +75,8 @@ class Params():
         
         self.sed_plots = bool(int(param_dict['sed_plots']))
         
+        self.load_tables()
+        
     ##################################################
     # class functions for loading tables and columns #
     ##################################################
@@ -98,3 +103,25 @@ class Params():
         #otherwise, just use the redshift column
         else:
             self.redshifts = self.main_tab[self.redshift_column]
+            
+        
+    #needed to find the most recent output directory to which CIGALE is sending the results of its most recent run.
+    def find_out(self):
+        import glob
+        import os
+        import numpy as np
+
+        pattern = os.path.join(self.destination, "*_out")   #all CIGALE directories end with "_out"
+        out_dirs = glob.glob(pattern)
+        if not out_dirs or len(out_dirs) < 2:      # if none are found...well. too bad.
+            #print(f"No out*/ directories found in {self.destination}. Defaulting to out/.")
+            self.output_dir_name = 'out'
+            return
+
+        #convert YYYYMMDD_HHMMSS part of the directory name to integers and compare!
+        #can do this directly with np.sort(), then pull the last directory name in the array
+        latest_out = np.sort(out_dirs)[-1]
+
+        #isolate just the directory name. :-)
+        self.output_dir_name = os.path.basename(latest_out)
+        print(self.output_dir_name)

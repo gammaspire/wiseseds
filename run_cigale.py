@@ -6,7 +6,6 @@ homedir = os.getenv("HOME")
 # ensure utils is in path
 sys.path.insert(0, 'utils')
 from param_utils import Params   #inherit Params class
-from plotting_utils import generate_pdfs
 
 
 def run_cigale_all(herschel=False):
@@ -44,17 +43,19 @@ if __name__ == "__main__":
     
     if params.create_pdfs:
         
+        #find most recently edited out*/ directory. NEEDED.
+        params.find_out()   #returns self.output_dir_name
+        
         #read results.fits output
-        results_path = os.path.join(params.destination, 'out', 'results.fits')
+        results_path = os.path.join(params.destination, params.output_dir_name, 'results.fits')
         results = Table.read(results_path)
     
         #ensure output directory exists...
-        pdf_dir = os.path.join(params.destination, 'out', 'PDF_fits')
+        pdf_dir = os.path.join(params.destination, params.output_dir_name, 'PDF_fits')
         os.makedirs(pdf_dir, exist_ok=True)
         
         #loop through each galaxy to generate PDFs
         for index in range(len(results)):
             os.system('python CLI_scripts/plot_PDF.py -params params.txt')
-            generate_pdfs(results, params.destination, index, delete_fits=False)
             
-    print(f'SEDs+PDFs (if applicable) and results.fits located in {params.destination}out/.')
+    print(f'SEDs+PDFs (if applicable) and results.fits located in {params.destination}{params.output_dir_name}/.')

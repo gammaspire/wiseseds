@@ -25,9 +25,6 @@ if __name__ == "__main__":
 
     params = Params(param_file)
     
-    #load tables
-    params.load_tables()
-    
     #load IDs and redshifts!
     params.load_columns()
     

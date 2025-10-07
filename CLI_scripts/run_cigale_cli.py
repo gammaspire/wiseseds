@@ -35,14 +35,16 @@ if __name__ == "__main__":
 
     #run CIGALE
     print('Executing CIGALE...')
-    run_cigale(params.dir_path)
+    run_cigale(params.destination)
 
+    params.find_out()     #determine most recently edited out*/ directory. needed!
+    
     #if SED plots requested, generate them and organize output
     if params.sed_plots:
         print('Generating SED plots...')
-        run_sed_plots(params.dir_path)
+        run_sed_plots(params.destination)
 
         print('Organizing output...')
-        organize_sed_output(params.dir_path, params.main_tab, params.id_col)
+        organize_sed_output(params.destination, params.main_tab, params.output_dir_name)
 
     print('CIGALE is Fin!')
