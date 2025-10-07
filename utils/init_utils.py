@@ -31,6 +31,16 @@ def get_bayes_list(results):
     return bayes_list
 
 
+################################################################
+# Move or delete PDF fits files once used for diagnostic plots #
+################################################################
+def handle_pdf_fits(destination, galaxy_id, delete_fits=False):
+    if delete_fits:
+        os.system(f'rm {destination}out/{galaxy_id}*.fits')
+    else:
+        os.system(f'mv {destination}out/{galaxy_id}*.fits {destination}out/PDF_fits')
+
+
 #####################################################
 # Names of each band in the cigale filter textfile! #
 #####################################################
@@ -328,33 +338,33 @@ def add_params(dir_path,sed_plots=False,lim_flag='noscaling',nblocks=1, create_p
                 print('line changed: save_best_sed = True')
             else:
                 modified_lines.append(line)
-
+        
         elif re.match(r'^\s*tau_main\s*=', line):
-            modified_lines.append('   tau_main = 300, 500 \n')
+            modified_lines.append('   tau_main = 300, 500, 1000, 3000, 6000, 1e5 \n')
         
         elif re.match(r'^\s*age\s*=', line):
-            modified_lines.append('   age = 1e3, 3e3 \n') 
+            modified_lines.append('   age = 1e3, 3e3, 5e3, 7e3, 1e4, 13000 \n') 
         
         elif re.match(r'^\s*age_main\s*=', line):
-            modified_lines.append('   age_main = 1e3, 3e3 \n')  
+            modified_lines.append('   age_main = 1e3, 3e3, 5e3, 7e3, 1e4, 13000 \n')  
         
         elif re.match(r'^\s*tau_burst\s*=', line):
-            modified_lines.append('   tau_burst = 100, 200 \n')
+            modified_lines.append('   tau_burst = 100, 200, 400 \n')
         
         elif re.match(fr'^\s*burst_age\s*=', line):
-            modified_lines.append('   burst_age = 20, 80, \n')
+            modified_lines.append('   burst_age = 20, 80, 200, 400, 800, 1e3 \n')
         
         elif re.match(fr'^\s*age_burst\s*=', line):
-            modified_lines.append('   age_burst = 20, 80 \n')    
+            modified_lines.append('   age_burst = 20, 80, 200, 400, 800, 1e3 \n')    
         
         elif re.match(r'^\s*f_burst\s*=', line):
-            modified_lines.append('   f_burst = 0, 0.001 \n')
+            modified_lines.append('   f_burst = 0, 0.001, 0.005, 0.01, 0.05, 0.1 \n')
         
         elif re.match(r'^\s*imf\s*=', line):
             modified_lines.append('   imf = 1 \n')
         
         elif re.match(r'^\s*metallicity\s*=', line):
-            modified_lines.append('   metallicity = 0.004, 0.02 \n')
+            modified_lines.append('   metallicity = 0.004, 0.02, 0.05 \n')
         
         elif re.match(r'^\s*variables\s*=',line):
             #modified_lines.append('  variables = sfh.sfr, stellar.m_star, sfh.burst_age, sfh.age, sfh.f_burst, sfh.tau_burst, sfh.tau_main, attenuation.Av_ISM, dust.alpha, dust.gamma, dust.qpah, dust.umean, dust.umin, dust.mass \n') 
@@ -364,10 +374,10 @@ def add_params(dir_path,sed_plots=False,lim_flag='noscaling',nblocks=1, create_p
             modified_lines.append('   normalise = True \n')
         
         elif re.match(r'^\s*Av_ISM\s*=',line):
-            modified_lines.append('  Av_ISM = 0.0, 0.01, 0.025  \n')
+            modified_lines.append('  Av_ISM = 0.0, 0.01, 0.025, 0.03, 0.035, 0.04, 0.05, 0.06, 0.12, 0.15, 1.0, 1.3, 1.5, 1.8, 2.1, 2.4, 2.7, 3.0, 3.3 \n')
         
         elif re.match(r'^\s*fracAGN\s*=',line):
-            modified_lines.append('  fracAGN = 0.0, 0.05 \n')
+            modified_lines.append('  fracAGN = 0.0, 0.05, 0.1, 0.5 \n')
         
         elif re.match(r'^\s*umin\s*=',line):
             modified_lines.append('  umin = 1.0, 5.0, 10.0 \n')
