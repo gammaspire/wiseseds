@@ -48,6 +48,7 @@ class Params():
 
         self.ncores = param_dict['ncores']
         self.nblocks = param_dict['nblocks']
+        self.output_dir_name = 'out'
 
         #in order to save the probability distribution functions, ncores = nblocks = 1
         self.create_pdfs = bool(int(param_dict['create_pdfs']))
@@ -105,23 +106,27 @@ class Params():
             self.redshifts = self.main_tab[self.redshift_column]
             
         
-    #needed to find the most recent output directory to which CIGALE is sending the results of its most recent run.
+    #finds the name of the directory to which CIGALE is moving the contents of '/out' before executing this next run.
     def find_out(self):
         import glob
         import os
         import numpy as np
-
-        pattern = os.path.join(self.destination, "*_out")   #all CIGALE directories end with "_out"
+        
+        pattern = os.path.join(self.destination, "*_out")   #all CIGALE directories end with "out"
         out_dirs = glob.glob(pattern)
-        if not out_dirs or len(out_dirs) < 2:      # if none are found...well. too bad.
-            #print(f"No out*/ directories found in {self.destination}. Defaulting to out/.")
-            self.output_dir_name = 'out'
+        
+        if not out_dirs:
             return
-
-        #convert YYYYMMDD_HHMMSS part of the directory name to integers and compare!
-        #can do this directly with np.sort(), then pull the last directory name in the array
+        
         latest_out = np.sort(out_dirs)[-1]
-
-        #isolate just the directory name. :-)
-        self.output_dir_name = os.path.basename(latest_out)
-        print(self.output_dir_name)
+        print('\n'
+              '##########################################################\n'
+              'DEFAULT OUTPUT DIRECTORY IS "out/"!\n'
+              'Previous "out/" contents, if any, moved to:\n'
+              f'{latest_out}.\n'
+              '##########################################################\n'
+             )
+        
+        return
+        
+        

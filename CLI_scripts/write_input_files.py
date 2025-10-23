@@ -25,6 +25,10 @@ if __name__ == "__main__":
 
     params = Params(param_file)
     
+    #send the print warning about where previous run's CIGALE output will be moved
+    #will ONLY print if '$/out' exists
+    params.find_out()
+    
     #load IDs and redshifts!
     params.load_columns()
     

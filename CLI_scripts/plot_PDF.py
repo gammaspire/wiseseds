@@ -35,9 +35,7 @@ if __name__ == "__main__":
         print('-params not found. exiting.')
         sys.exit()
     
-    params = Params(param_file)
-    params.find_out()     #define params.output_dir_name. needed!
-    
+    params = Params(param_file)    
     results = Table.read(f'{params.destination}{params.output_dir_name}/results.fits')
     
     #ensure output directory exists...otherwise, create it!

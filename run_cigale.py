@@ -41,10 +41,10 @@ if __name__ == "__main__":
                 
     run_cigale_all(herschel)
     
+    #find most recently edited out*/ directory. NEEDED.
+    params.find_out()   #returns self.output_dir_name
+    
     if params.create_pdfs:
-        
-        #find most recently edited out*/ directory. NEEDED.
-        params.find_out()   #returns self.output_dir_name
         
         #read results.fits output
         results_path = os.path.join(params.destination, params.output_dir_name, 'results.fits')
@@ -58,4 +58,4 @@ if __name__ == "__main__":
         for index in range(len(results)):
             os.system('python CLI_scripts/plot_PDF.py -params params.txt')
             
-    print(f'SEDs+PDFs (if applicable) and results.fits located in {params.destination}{params.output_dir_name}/.')
+    print(f"Results of this run's SEDs+PDFs (if applicable) and results.fits located in {params.destination}{params.output_dir_name}/.\n")
